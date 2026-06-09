@@ -32,18 +32,18 @@ export function Stepper({
         </span>
       )}
       <div
-        className={`flex w-full items-center justify-between gap-1 rounded-xl px-1 py-1 ${ringClass}`}
+        className={`grid w-full grid-cols-[2.5rem_1fr_2.5rem] items-center rounded-xl py-1 ${ringClass}`}
       >
         <button
           type="button"
           onClick={omlaag}
           disabled={waarde <= min}
           aria-label="minder"
-          className="h-10 w-10 shrink-0 text-2xl font-bold text-slate-300 disabled:opacity-25 active:opacity-60"
+          className="h-10 w-10 justify-self-center text-2xl font-bold text-slate-300 disabled:opacity-25 active:opacity-60"
         >
           −
         </button>
-        <span className="min-w-0 flex-1 text-center text-xl font-bold tabular-nums">
+        <span className="text-center text-xl font-bold tabular-nums">
           {waarde}
         </span>
         <button
@@ -51,7 +51,7 @@ export function Stepper({
           onClick={omhoog}
           disabled={waarde >= max}
           aria-label="meer"
-          className="h-10 w-10 shrink-0 text-2xl font-bold text-teal-300 disabled:opacity-25 active:opacity-60"
+          className="h-10 w-10 justify-self-center text-2xl font-bold text-teal-300 disabled:opacity-25 active:opacity-60"
         >
           +
         </button>
