@@ -134,4 +134,17 @@ describe('berekenStand', () => {
     const anna = stand.find((s) => s.playerId === 'a')
     expect(anna?.rondeScores).toEqual([12, -4])
   })
+
+  it('rekent met aantalRondes alleen over de eerste N rondes', () => {
+    const stand = berekenStand(game, 1) // alleen ronde 1
+    const anna = stand.find((s) => s.playerId === 'a')
+    const bram = stand.find((s) => s.playerId === 'b')
+    expect(anna?.totaal).toBe(12)
+    expect(bram?.totaal).toBe(10)
+  })
+
+  it('geeft 0 voor iedereen bij aantalRondes = 0', () => {
+    const stand = berekenStand(game, 0)
+    expect(stand.every((s) => s.totaal === 0)).toBe(true)
+  })
 })

@@ -150,7 +150,7 @@ export function GamePage({ id, onExit }: GamePageProps) {
         </button>
       )}
 
-      {!klaar && <Scoreboard game={werkSpel} />}
+      {!klaar && <Scoreboard game={werkSpel} aantalRondes={huidigeIndex} />}
 
       <RoundHistory
         game={werkSpel}

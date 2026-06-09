@@ -66,10 +66,18 @@ export interface StandRegel {
   positie: number
 }
 
-/** Berekent de totaalstand per speler, gesorteerd aflopend (leider eerst). */
-export function berekenStand(game: Readonly<Game>): StandRegel[] {
+/**
+ * Berekent de totaalstand per speler, gesorteerd aflopend (leider eerst).
+ * Met `aantalRondes` reken je alleen over de eerste N rondes (handig om de
+ * stand tot en met de vorige ronde te tonen, zonder de ronde die nu wordt ingevuld).
+ */
+export function berekenStand(
+  game: Readonly<Game>,
+  aantalRondes: number = game.rounds.length,
+): StandRegel[] {
+  const rondes = game.rounds.slice(0, Math.max(0, aantalRondes))
   const regels = game.players.map((player): Omit<StandRegel, 'positie'> => {
-    const rondeScores = game.rounds.map((round) => {
+    const rondeScores = rondes.map((round) => {
       const entry = round.entries.find((e) => e.playerId === player.id)
       if (!entry) {
         return 0
