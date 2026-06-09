@@ -14,7 +14,7 @@ function App() {
   const [view, setView] = useState<View>({ naam: 'home' })
 
   return (
-    <div className="mx-auto flex min-h-full w-full max-w-md flex-col overflow-x-hidden px-4 pb-16 pt-6">
+    <div className="mx-auto flex min-h-full max-w-md flex-col px-4 pb-16 pt-6">
       <header className="mb-5">
         <h1 className="text-2xl font-bold text-teal-400">Boerenbridge</h1>
         <p className="text-sm text-slate-400">Houd eenvoudig de scores bij.</p>

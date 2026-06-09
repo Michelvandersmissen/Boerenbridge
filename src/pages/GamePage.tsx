@@ -109,7 +109,6 @@ export function GamePage({ id, onExit }: GamePageProps) {
           ronde={actieveRonde}
           rondeNummer={actieveIndex + 1}
           players={werkSpel.players}
-          scoring={werkSpel.scoring}
           onChange={wijzigRonde}
         />
       )}
