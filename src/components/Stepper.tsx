@@ -39,7 +39,7 @@ export function Stepper({
           onClick={omlaag}
           disabled={waarde <= min}
           aria-label="minder"
-          className="h-10 w-10 shrink-0 rounded-lg bg-slate-700 text-xl font-bold text-white disabled:opacity-30 active:bg-slate-600"
+          className="h-10 w-10 shrink-0 text-2xl font-bold text-slate-300 disabled:opacity-25 active:opacity-60"
         >
           −
         </button>
@@ -51,7 +51,7 @@ export function Stepper({
           onClick={omhoog}
           disabled={waarde >= max}
           aria-label="meer"
-          className="h-10 w-10 shrink-0 rounded-lg bg-teal-600 text-xl font-bold text-white disabled:opacity-30 active:bg-teal-500"
+          className="h-10 w-10 shrink-0 text-2xl font-bold text-teal-300 disabled:opacity-25 active:opacity-60"
         >
           +
         </button>
