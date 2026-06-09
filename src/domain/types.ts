@@ -7,7 +7,12 @@ export interface Player {
 }
 
 /** Beschikbare scoring-presets. 'custom' laat de velden vrij instellen. */
-export type ScoringPreset = 'tien-plus-twee' | 'drie-per-slag' | 'zaans' | 'custom'
+export type ScoringPreset =
+  | 'tien-plus-twee'
+  | 'tien-plus-een'
+  | 'drie-per-slag'
+  | 'zaans'
+  | 'custom'
 
 /**
  * Hoe een ronde wordt gescoord:

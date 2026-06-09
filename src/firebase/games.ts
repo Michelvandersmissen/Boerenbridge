@@ -19,7 +19,13 @@ const COLLECTIE = 'games'
 const playerSchema = z.object({ id: z.string(), naam: z.string() })
 
 const scoringSchema = z.object({
-  preset: z.enum(['tien-plus-twee', 'drie-per-slag', 'zaans', 'custom']),
+  preset: z.enum([
+    'tien-plus-twee',
+    'tien-plus-een',
+    'drie-per-slag',
+    'zaans',
+    'custom',
+  ]),
   modus: z.enum(['juist-fout', 'per-slag']),
   bonusJuist: z.number(),
   puntenPerSlag: z.number(),

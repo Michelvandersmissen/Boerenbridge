@@ -15,6 +15,13 @@ const PRESET_CONFIGS: Record<Exclude<ScoringPreset, 'custom'>, ScoringConfig> = 
     puntenPerSlag: 2,
     strafPerVerschil: 2,
   },
+  'tien-plus-een': {
+    preset: 'tien-plus-een',
+    modus: 'juist-fout',
+    bonusJuist: 10,
+    puntenPerSlag: 1,
+    strafPerVerschil: 1,
+  },
   'drie-per-slag': {
     preset: 'drie-per-slag',
     modus: 'juist-fout',
@@ -38,6 +45,12 @@ export const SCORING_PRESETS: ScoringPresetInfo[] = [
     label: '10 + 2 per slag',
     beschrijving: 'Juist = 10 punten + 2 per slag. Fout = −2 per slag verschil.',
     config: PRESET_CONFIGS['tien-plus-twee'],
+  },
+  {
+    preset: 'tien-plus-een',
+    label: '10 + 1 per slag',
+    beschrijving: 'Juist = 10 punten + 1 per slag. Fout = −1 per slag verschil.',
+    config: PRESET_CONFIGS['tien-plus-een'],
   },
   {
     preset: 'drie-per-slag',

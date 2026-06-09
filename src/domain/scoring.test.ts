@@ -60,6 +60,22 @@ describe('rondeScore — 10 + 2 per slag', () => {
   })
 })
 
+describe('rondeScore — 10 + 1 per slag', () => {
+  const cfg = presetConfig('tien-plus-een')
+
+  it('juiste voorspelling van 3 slagen = 10 + 1*3 = 13', () => {
+    expect(rondeScore(3, 3, cfg)).toBe(13)
+  })
+
+  it('juiste voorspelling van 0 slagen = 10', () => {
+    expect(rondeScore(0, 0, cfg)).toBe(10)
+  })
+
+  it('foute voorspelling, 2 verschil = -2', () => {
+    expect(rondeScore(3, 1, cfg)).toBe(-2)
+  })
+})
+
 describe('rondeScore — 3 per slag', () => {
   const cfg = presetConfig('drie-per-slag')
 
