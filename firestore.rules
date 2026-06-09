@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Geen login gekozen, dus toegang kan niet per gebruiker beperkt worden.
+// Deze regels staan lezen/schrijven op de games-collectie toe met een lichte
+// vorm-validatie. Functioneel voor een privé-spel onder vrienden, maar publiek
+// schrijfbaar voor wie de project-config kent. Voor echte afscherming: voeg
+// Firebase Auth toe en beperk op eigenaar.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /games/{gameId} {
+      allow read, delete: if true;
+
+      allow create, update: if isGeldigSpel(request.resource.data);
+    }
+
+    function isGeldigSpel(data) {
+      return data.naam is string
+        && data.naam.size() <= 80
+        && data.players is list
+        && data.players.size() >= 3
+        && data.players.size() <= 8
+        && data.rounds is list
+        && data.kaartenReeks is list
+        && data.updatedAt is number
+        && data.status in ['setup', 'spelen', 'klaar'];
+    }
+  }
+}

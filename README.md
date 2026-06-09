@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# Boerenbridge Scores
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Een simpele PWA om de scores van Boerenbridge bij te houden. Eén persoon noteert per
+ronde de biedingen en gehaalde slagen; de app rekent de punten uit en bewaart de spellen
+in Firebase Firestore (sync over apparaten).
 
-Currently, two official plugins are available:
+## Functies
+- 3–8 spelers, kaarten-reeks oplopend (1 → max) of op-af (1 → max → 1).
+- **Deler-regel**: waarschuwing als de som van de biedingen gelijk is aan de kaarten.
+- Slagen-controle: volgende ronde pas mogelijk als de gehaalde slagen optellen tot de kaarten.
+- Instelbare puntentelling: `10 + 2 per slag`, `3 per slag`, `Zaans (5 per slag)` of eigen.
+- Live stand, historie met correctie van eerdere rondes, installeerbaar als app (PWA).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech
+Vite + React + TypeScript, Tailwind CSS, Firebase Firestore, vite-plugin-pwa, Vitest.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Lokaal draaien
+```bash
+npm install
+cp .env.example .env   # vul je Firebase-config in
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
+- `npm run dev` — dev-server
+- `npm test` — unit tests (domeinlogica)
+- `npm run build` — productie-build (incl. PWA)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Firebase koppelen (in de terminal)
+1. Inloggen: `firebase login`
+2. Project kiezen of aanmaken in de [Firebase console](https://console.firebase.google.com),
+   en in dit project koppelen: `firebase use --add`
+3. Web-app aanmaken in de console (Project settings → Your apps → Web) en de config
+   in `.env` zetten (zie `.env.example`).
+4. Firestore aanzetten in de console (Build → Firestore Database → Create database).
+5. Rules + (lege) indexes deployen: `firebase deploy --only firestore`
+6. App online zetten: `npm run build && firebase deploy --only hosting`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Beveiliging
+Zonder login zijn de Firestore-rules publiek schrijfbaar (met lichte vorm-validatie) —
+prima voor een privé-spel, niet voor gevoelige data. Wil je het afschermen, voeg dan
+Firebase Auth toe en beperk de rules op eigenaar.

@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon.svg', 'pwa-icon.svg'],
       manifest: {
         name: 'Boerenbridge Scores',
         short_name: 'Boerenbridge',
@@ -20,12 +20,11 @@ export default defineConfig({
         orientation: 'portrait',
         start_url: '/',
         icons: [
-          { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
-          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'pwa-icon.svg', sizes: 'any', type: 'image/svg+xml' },
           {
-            src: 'pwa-512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: 'pwa-icon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
             purpose: 'maskable',
           },
         ],
