@@ -46,7 +46,7 @@ export function RoundCard({
         </span>
       </div>
 
-      <div className="grid grid-cols-[1fr_auto_auto] items-center gap-x-2 gap-y-3">
+      <div className="grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.4fr)_minmax(0,1.4fr)] items-center gap-x-2 gap-y-3">
         <span />
         <span className="text-center text-xs uppercase text-slate-500">Bod</span>
         <span className="text-center text-xs uppercase text-slate-500">

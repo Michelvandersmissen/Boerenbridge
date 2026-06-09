@@ -8,7 +8,7 @@ interface StepperProps {
   label?: string
 }
 
-/** Grote, duim-vriendelijke +/− teller voor snelle invoer. */
+/** Volle-breedte, duim-vriendelijke +/− teller: − links, waarde midden, + rechts. */
 export function Stepper({
   waarde,
   onChange,
@@ -25,21 +25,25 @@ export function Stepper({
     : 'bg-slate-800'
 
   return (
-    <div className="flex flex-col items-center gap-1">
-      {label && <span className="text-xs text-slate-400">{label}</span>}
+    <div className="flex w-full flex-col gap-1">
+      {label && (
+        <span className="text-center text-xs uppercase text-slate-500">
+          {label}
+        </span>
+      )}
       <div
-        className={`flex items-center gap-2 rounded-xl px-2 py-1 ${ringClass}`}
+        className={`flex w-full items-center justify-between gap-1 rounded-xl px-1 py-1 ${ringClass}`}
       >
         <button
           type="button"
           onClick={omlaag}
           disabled={waarde <= min}
           aria-label="minder"
-          className="h-11 w-11 rounded-lg bg-slate-700 text-2xl font-bold text-white disabled:opacity-30 active:bg-slate-600"
+          className="h-10 w-10 shrink-0 rounded-lg bg-slate-700 text-xl font-bold text-white disabled:opacity-30 active:bg-slate-600"
         >
           −
         </button>
-        <span className="w-8 text-center text-2xl font-bold tabular-nums">
+        <span className="min-w-0 flex-1 text-center text-xl font-bold tabular-nums">
           {waarde}
         </span>
         <button
@@ -47,7 +51,7 @@ export function Stepper({
           onClick={omhoog}
           disabled={waarde >= max}
           aria-label="meer"
-          className="h-11 w-11 rounded-lg bg-teal-600 text-2xl font-bold text-white disabled:opacity-30 active:bg-teal-500"
+          className="h-10 w-10 shrink-0 rounded-lg bg-teal-600 text-xl font-bold text-white disabled:opacity-30 active:bg-teal-500"
         >
           +
         </button>
