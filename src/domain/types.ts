@@ -52,6 +52,8 @@ export type GameStatus = 'setup' | 'spelen' | 'klaar'
 
 export interface Game {
   id: string
+  /** uid van de (anonieme) eigenaar; bepaalt wie het spel ziet en mag wijzigen. */
+  ownerId: string
   naam: string
   createdAt: number
   updatedAt: number

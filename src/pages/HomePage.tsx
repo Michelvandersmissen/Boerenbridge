@@ -3,12 +3,13 @@ import { GameList } from '../components/GameList'
 import { deleteGame } from '../firebase/games'
 
 interface HomePageProps {
+  uid: string
   onNieuw: () => void
   onOpen: (id: string) => void
 }
 
-export function HomePage({ onNieuw, onOpen }: HomePageProps) {
-  const { games, loading, error } = useGames()
+export function HomePage({ uid, onNieuw, onOpen }: HomePageProps) {
+  const { games, loading, error } = useGames(uid)
 
   const verwijder = (id: string) => {
     if (confirm('Dit spel verwijderen?')) {

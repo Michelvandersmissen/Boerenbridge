@@ -7,6 +7,7 @@ import {
   orderBy,
   query,
   setDoc,
+  where,
 } from 'firebase/firestore'
 import { z } from 'zod'
 import type { Game } from '../domain/types'
@@ -40,6 +41,7 @@ const roundSchema = z.object({
 
 const gameSchema = z.object({
   id: z.string(),
+  ownerId: z.string(),
   naam: z.string(),
   createdAt: z.number(),
   updatedAt: z.number(),
@@ -94,13 +96,18 @@ export function subscribeGame(
   }
 }
 
-/** Abonneert op de lijst met spellen, nieuwste eerst. */
+/** Abonneert op de spellen van één eigenaar, nieuwste eerst. */
 export function subscribeGames(
+  ownerId: string,
   onChange: (games: Game[]) => void,
   onError: (error: Error) => void,
 ): () => void {
   try {
-    const q = query(collection(getDb(), COLLECTIE), orderBy('updatedAt', 'desc'))
+    const q = query(
+      collection(getDb(), COLLECTIE),
+      where('ownerId', '==', ownerId),
+      orderBy('updatedAt', 'desc'),
+    )
     return onSnapshot(
       q,
       (snap) => {

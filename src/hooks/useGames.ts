@@ -8,14 +8,15 @@ interface UseGamesResult {
   error: string | null
 }
 
-/** Abonneert op alle opgeslagen spellen (realtime, nieuwste eerst). */
-export function useGames(): UseGamesResult {
+/** Abonneert op de spellen van de gegeven eigenaar (realtime, nieuwste eerst). */
+export function useGames(ownerId: string): UseGamesResult {
   const [games, setGames] = useState<Game[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const unsub = subscribeGames(
+      ownerId,
       (next) => {
         setGames(next)
         setLoading(false)
@@ -26,7 +27,7 @@ export function useGames(): UseGamesResult {
       },
     )
     return unsub
-  }, [])
+  }, [ownerId])
 
   return { games, loading, error }
 }

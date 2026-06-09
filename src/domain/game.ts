@@ -10,6 +10,8 @@ import { delerIndex, genereerKaartenReeks, maxKaarten } from './rounds'
 
 export interface NieuwSpelInput {
   naam: string
+  /** uid van de eigenaar (anonieme login). */
+  ownerId: string
   players: Player[]
   scoring: ScoringConfig
   sequentie: SequentieModus
@@ -25,6 +27,7 @@ export function maakSpelData(input: NieuwSpelInput): Omit<Game, 'id'> {
   const kaartenReeks = genereerKaartenReeks(max, input.sequentie)
 
   return {
+    ownerId: input.ownerId,
     naam: input.naam,
     createdAt: input.nu,
     updatedAt: input.nu,

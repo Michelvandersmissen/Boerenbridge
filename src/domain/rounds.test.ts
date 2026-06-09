@@ -84,6 +84,7 @@ describe('isSlagenGeldig', () => {
 describe('berekenStand', () => {
   const game: Game = {
     id: 'g1',
+    ownerId: 'u1',
     naam: 'Test',
     createdAt: 0,
     updatedAt: 0,

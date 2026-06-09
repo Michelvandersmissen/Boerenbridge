@@ -9,6 +9,7 @@ import { createGame } from '../firebase/games'
 import { maakId, nu } from '../lib/util'
 
 interface SetupPageProps {
+  uid: string
   onCreated: (id: string) => void
   onCancel: () => void
 }
@@ -21,7 +22,7 @@ function legeSpelers(): Player[] {
   ]
 }
 
-export function SetupPage({ onCreated, onCancel }: SetupPageProps) {
+export function SetupPage({ uid, onCreated, onCancel }: SetupPageProps) {
   const [naam, setNaam] = useState('')
   const [players, setPlayers] = useState<Player[]>(legeSpelers)
   const [scoring, setScoring] = useState<ScoringConfigType>(() =>
@@ -43,6 +44,7 @@ export function SetupPage({ onCreated, onCancel }: SetupPageProps) {
     try {
       const data = maakSpelData({
         naam: naam.trim() || 'Boerenbridge',
+        ownerId: uid,
         players: geldigeSpelers.map((p) => ({ ...p, naam: p.naam.trim() })),
         scoring,
         sequentie,

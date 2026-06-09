@@ -19,6 +19,7 @@ describe('maakSpelData', () => {
   it('genereert kaarten-reeks op basis van spelers en sequentie', () => {
     const data = maakSpelData({
       naam: 'Avondje',
+      ownerId: 'u1',
       players,
       scoring: presetConfig('tien-plus-twee'),
       sequentie: 'op',
@@ -33,6 +34,7 @@ describe('maakSpelData', () => {
   it('gebruikt floor(52/spelers) als geen override gegeven is', () => {
     const data = maakSpelData({
       naam: 'x',
+      ownerId: 'u1',
       players,
       scoring: presetConfig('zaans'),
       sequentie: 'op',
@@ -55,6 +57,7 @@ describe('maakLegeRonde', () => {
 function basisSpel(): Game {
   return {
     id: 'g1',
+    ownerId: 'u1',
     naam: 'Test',
     createdAt: 0,
     updatedAt: 0,

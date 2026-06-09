@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { HomePage } from './pages/HomePage'
 import { SetupPage } from './pages/SetupPage'
 import { GamePage } from './pages/GamePage'
+import { useAuth } from './hooks/useAuth'
 
 type View =
   | { naam: 'home' }
@@ -9,6 +10,7 @@ type View =
   | { naam: 'game'; id: string }
 
 function App() {
+  const { uid, loading, error } = useAuth()
   const [view, setView] = useState<View>({ naam: 'home' })
 
   return (
@@ -18,22 +20,37 @@ function App() {
         <p className="text-sm text-slate-400">Houd eenvoudig de scores bij.</p>
       </header>
 
-      {view.naam === 'home' && (
-        <HomePage
-          onNieuw={() => setView({ naam: 'setup' })}
-          onOpen={(id) => setView({ naam: 'game', id })}
-        />
+      {loading && <p className="text-slate-400">Aanmelden…</p>}
+
+      {error && (
+        <p className="rounded-lg border border-rose-800 bg-rose-950/40 p-3 text-sm text-rose-300">
+          Inloggen mislukt: {error}. Controleer of anonieme login aanstaat in
+          Firebase.
+        </p>
       )}
 
-      {view.naam === 'setup' && (
-        <SetupPage
-          onCreated={(id) => setView({ naam: 'game', id })}
-          onCancel={() => setView({ naam: 'home' })}
-        />
-      )}
+      {!loading && !error && uid && (
+        <>
+          {view.naam === 'home' && (
+            <HomePage
+              uid={uid}
+              onNieuw={() => setView({ naam: 'setup' })}
+              onOpen={(id) => setView({ naam: 'game', id })}
+            />
+          )}
 
-      {view.naam === 'game' && (
-        <GamePage id={view.id} onExit={() => setView({ naam: 'home' })} />
+          {view.naam === 'setup' && (
+            <SetupPage
+              uid={uid}
+              onCreated={(id) => setView({ naam: 'game', id })}
+              onCancel={() => setView({ naam: 'home' })}
+            />
+          )}
+
+          {view.naam === 'game' && (
+            <GamePage id={view.id} onExit={() => setView({ naam: 'home' })} />
+          )}
+        </>
       )}
     </div>
   )

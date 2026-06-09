@@ -1,4 +1,5 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app'
+import { getAuth, type Auth } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
 
 interface FirebaseEnv {
@@ -34,11 +35,25 @@ function leesConfig(): FirebaseEnv {
 
 let appInstance: FirebaseApp | null = null
 let dbInstance: Firestore | null = null
+let authInstance: Auth | null = null
+
+function getApp(): FirebaseApp {
+  if (!appInstance) {
+    appInstance = initializeApp(leesConfig())
+  }
+  return appInstance
+}
 
 export function getDb(): Firestore {
   if (!dbInstance) {
-    appInstance = initializeApp(leesConfig())
-    dbInstance = getFirestore(appInstance)
+    dbInstance = getFirestore(getApp())
   }
   return dbInstance
+}
+
+export function getAuthInstance(): Auth {
+  if (!authInstance) {
+    authInstance = getAuth(getApp())
+  }
+  return authInstance
 }
