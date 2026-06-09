@@ -114,13 +114,15 @@ function FragmentRow({
 }: FragmentRowProps) {
   return (
     <>
-      <div className="flex min-w-0 items-center gap-1">
+      <div className="flex min-w-0 items-center gap-1.5">
+        <span
+          className={`h-2 w-2 shrink-0 rounded-full ${
+            isDeler ? 'bg-teal-400' : 'bg-transparent'
+          }`}
+          title={isDeler ? 'deler' : undefined}
+          aria-label={isDeler ? 'deler' : undefined}
+        />
         <span className="truncate font-medium">{naam}</span>
-        {isDeler && (
-          <span className="rounded bg-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-300">
-            deler
-          </span>
-        )}
       </div>
       <Stepper
         waarde={bod}
