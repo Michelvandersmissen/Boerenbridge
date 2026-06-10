@@ -37,6 +37,21 @@ npm run dev
 6. App online zetten: `npm run build && firebase deploy --only hosting`
 
 ## Beveiliging
-Zonder login zijn de Firestore-rules publiek schrijfbaar (met lichte vorm-validatie) —
-prima voor een privé-spel, niet voor gevoelige data. Wil je het afschermen, voeg dan
-Firebase Auth toe en beperk de rules op eigenaar.
+Spellen zijn via anonieme login per apparaat afgeschermd: je kunt alleen je eigen spellen
+(op basis van `ownerId == jouw uid`) lezen/wijzigen. Injecties (SQL/NoSQL/XSS) zijn niet
+mogelijk: Firestore is geen SQL-database en React escapet alle weergegeven waarden.
+
+### App Check (bescherming tegen scripted misbruik)
+De app initialiseert Firebase App Check met reCAPTCHA v3 zodra `VITE_RECAPTCHA_SITE_KEY`
+is gezet (zonder die sleutel doet App Check niets). Inschakelen:
+1. Maak een **reCAPTCHA v3**-sleutel op https://www.google.com/recaptcha/admin/create
+   (type v3; domeinen: `boerenbridge.web.app` en `localhost`). Je krijgt een *site key*
+   (publiek, voor de app) en een *secret key* (voor Firebase).
+2. Firebase console → **App Check** → web-app registreren → provider **reCAPTCHA v3** →
+   plak de *secret key*.
+3. Zet de *site key* in `.env`: `VITE_RECAPTCHA_SITE_KEY=...`, daarna `npm run build &&
+   firebase deploy --only hosting`.
+4. Controleer in de console (App Check-metrics) dat verzoeken geverifieerd binnenkomen.
+5. **Pas dan** App Check **afdwingen** voor Firestore (en Authentication) aanzetten.
+6. Lokaal: de browser-console toont een debug-token; registreer die onder
+   App Check → *Beheer debug-tokens*.

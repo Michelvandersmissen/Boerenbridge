@@ -1,6 +1,7 @@
 import { initializeApp, type FirebaseApp } from 'firebase/app'
 import { getAuth, type Auth } from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
+import { setupAppCheck } from './appcheck'
 
 interface FirebaseEnv {
   apiKey: string
@@ -40,6 +41,7 @@ let authInstance: Auth | null = null
 function getApp(): FirebaseApp {
   if (!appInstance) {
     appInstance = initializeApp(leesConfig())
+    setupAppCheck(appInstance)
   }
   return appInstance
 }
